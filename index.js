@@ -29,11 +29,13 @@ app.get("/api/:date?", function (req, res) {
 
   let isUnix = /^\d+$/.test(date);
 
-  if (isUnix){
+  if (!date) {
+    dateObj = new Date();
+  } else if (date && isUnix){
     unixDate = parseInt(date);
     dateObj = new Date(unixDate)
     utcDate = dateObj.toUTCString();
-  } else if(!isUnix) {
+  } else if(date && !isUnix) {
     dateObj = new Date(date);
   }
 
