@@ -35,9 +35,15 @@ app.get("/api/:date?", function (req, res) {
     utcDate = dateObj.toUTCString();
   } else if(!isUnix) {
     dateObj = new Date(date);
-    unixDate = dateObj.getTime();
-    utcDate = dateObj.toUTCString();
   }
+
+  if (dateObj.toString() === "Invalid Date"){
+    res.json({error: "Invalid Date"})
+    return;
+  }
+
+  unixDate = dateObj.getTime();
+  utcDate = dateObj.toUTCString();
 
   res.json({unix: unixDate, utc: utcDate});
 });
